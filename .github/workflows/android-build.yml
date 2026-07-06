@@ -30,9 +30,16 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Accept Android licenses
+        run: yes | sdkmanager --licenses
+
       - name: Install SDK packages
         run: |
-          sdkmanager "platforms;android-37" "ndk;29.0.14206865" "cmake;3.22.1"
+          sdkmanager --install "platform-tools"
+          sdkmanager --install "platforms;android-36"
+          sdkmanager --install "build-tools;36.0.0"
+          sdkmanager --install "ndk;29.0.14206865"
+          sdkmanager --install "cmake;3.22.1"
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
@@ -40,13 +47,14 @@ jobs:
       - name: Make wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Show versions
-        run: |
-          java -version
-          ./gradlew --version
+      - name: Show installed SDK packages
+        run: sdkmanager --list_installed
+
+      - name: Show Gradle version
+        run: ./gradlew --version
 
       - name: Build Debug APK
-        run: ./gradlew :app:assembleDebug --stacktrace
+        run: ./gradlew :app:assembleDebug --stacktrace --info
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
