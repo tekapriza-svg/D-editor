@@ -43,18 +43,17 @@ jobs:
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
-
-      - name: Make wrapper executable
-        run: chmod +x ./gradlew
+        with:
+          gradle-version: 9.3.1
 
       - name: Show installed SDK packages
         run: sdkmanager --list_installed
 
       - name: Show Gradle version
-        run: ./gradlew --version
+        run: gradle --version
 
       - name: Build Debug APK
-        run: ./gradlew :app:assembleDebug --stacktrace --info
+        run: gradle :app:assembleDebug --stacktrace --info
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
