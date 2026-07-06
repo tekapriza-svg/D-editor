@@ -5,13 +5,13 @@ plugins {
 
 android {
     namespace = "com.deditor"
-    compileSdk = 37
+    compileSdk = 36
     ndkVersion = "29.0.14206865"
 
     defaultConfig {
         applicationId = "com.deditor"
         minSdk = 26
-        targetSdk = 37
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0.0"
 
